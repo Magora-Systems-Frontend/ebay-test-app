@@ -1,0 +1,25 @@
+{
+  "name": "ebay-test-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Magora-Systems-Frontend/ebay-test-app.git"
+  },
+  "author": "Dmitry Kalyuk <kalyuk@magora.systems>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Magora-Systems-Frontend/ebay-test-app/issues"
+  },
+  "homepage": "https://github.com/Magora-Systems-Frontend/ebay-test-app#readme",
+  "dependencies": {
+    "async": "^1.4.2",
+    "ebay-api": "^0.1.1",
+    "mysql": "felixge/node-mysql",
+    "require-dir": "^0.3.0"
+  }
+}
