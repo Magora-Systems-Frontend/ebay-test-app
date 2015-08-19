@@ -15,29 +15,41 @@
 
                     if (!err) {
 
-                        app
-                            .mysql
-                            .query('TRUNCATE `category`', function (err) {
+                        app.mysql.query("DROP TABLE `category`;", function () {
 
-                                if (!err) {
 
-                                    async
-                                        .eachSeries(results.CategoryArray.Category, function iterator(item, done) {
-                                            app
-                                                .mysql
-                                                .query('INSERT INTO `category` SET ? ', {
-                                                    CategoryID: item['CategoryID'],
-                                                    CategoryName: item['CategoryName'],
-                                                    CategoryLevel: item['CategoryLevel'],
-                                                    BestOfferEnabled: item['BestOfferEnabled'] === 'true',
-                                                    CategoryParentID: item['CategoryParentID'] === item['CategoryID'] ? 0 : item['CategoryParentID']
-                                                }, done);
+                            app
+                                .mysql
+                                .query(
+                                "CREATE TABLE `category` (`CategoryID` int(11) NOT NULL, " +
+                                " `CategoryName` varchar(45) NOT NULL," +
+                                " `CategoryLevel` int(11) NOT NULL DEFAULT '1'," +
+                                " `BestOfferEnabled` tinyint(4) NOT NULL DEFAULT '1'," +
+                                " `CategoryParentID` int(11) DEFAULT NULL," +
+                                "PRIMARY KEY (`CategoryID`)," +
+                                "UNIQUE KEY `Id_UNIQUE` (`CategoryID`)" +
+                                ") ENGINE=InnoDB DEFAULT CHARSET=utf8;", function (err) {
 
-                                        }, next);
-                                } else {
-                                    console.log(err);
-                                }
-                            });
+                                    if (!err) {
+
+                                        async
+                                            .eachSeries(results.CategoryArray.Category, function iterator(item, done) {
+                                                app
+                                                    .mysql
+                                                    .query('INSERT INTO `category` SET ? ', {
+                                                        CategoryID: item['CategoryID'],
+                                                        CategoryName: item['CategoryName'],
+                                                        CategoryLevel: item['CategoryLevel'],
+                                                        BestOfferEnabled: item['BestOfferEnabled'] === 'true',
+                                                        CategoryParentID: item['CategoryParentID'] === item['CategoryID'] ? 0 : item['CategoryParentID']
+                                                    }, done);
+
+                                            }, next);
+                                    } else {
+                                        console.log(err);
+                                    }
+                                });
+                        });
 
 
                     } else {
@@ -45,6 +57,7 @@
                     }
                 }
             );
+
         },
 
         list: function (items) {
